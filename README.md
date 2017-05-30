@@ -22,7 +22,7 @@ pod "Speech"
 
 ## Author
 
-matteocrippa, matteo@boostco.de
+matteocrippa, @_ghego
 
 ## License
 
