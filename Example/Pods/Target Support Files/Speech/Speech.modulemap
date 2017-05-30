@@ -1,0 +1,6 @@
+framework module Speech {
+  umbrella header "Speech-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,16 @@
+PODS:
+  - Speech (0.1.0)
+
+DEPENDENCIES:
+  - Speech (from `../`)
+
+EXTERNAL SOURCES:
+  Speech:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Speech: 83cc8319984e82739ff1c653b1580878df3f9d60
+
+PODFILE CHECKSUM: 159cdf2919c6ff1e08cd06ace929a7ab29850f73
+
+COCOAPODS: 1.2.1
