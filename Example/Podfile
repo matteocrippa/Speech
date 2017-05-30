@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'Speech_Example' do
+  pod 'Speech', :path => '../'
+
+  target 'Speech_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
