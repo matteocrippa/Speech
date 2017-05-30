@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'Speech'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of Speech.'
+  s.summary          = 'A shared instance to easily use text to speech in iOS.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,25 +18,18 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+An easy shared instance to make use of text to speech functions in iOS
                        DESC
 
   s.homepage         = 'https://github.com/matteocrippa/Speech'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'matteocrippa' => 'matteo@boostco.de' }
+  s.author           = { 'matteocrippa' => '@_ghego' }
   s.source           = { :git => 'https://github.com/matteocrippa/Speech.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.social_media_url = 'https://twitter.com/@_ghego'
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'Speech/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'Speech' => ['Speech/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.frameworks = 'AVFoundation'
 end
