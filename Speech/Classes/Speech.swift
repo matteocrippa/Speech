@@ -42,7 +42,7 @@ open class Speech: NSObject {
   /// Speak function
   ///
   /// - Parameter text: text to be readed by voice
-  open func speak(text: String) {
+  public func speak(text: String) {
     
     // force delegate
     synth.delegate = self
