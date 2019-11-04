@@ -28,7 +28,7 @@ open class SpeechConfiguration {
 open class Speech: NSObject {
   
   /// Shared instance
-  open static var shared = Speech()
+  public static var shared = Speech()
   private override init() {}
   
   /// Configuration
