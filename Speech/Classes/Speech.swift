@@ -44,6 +44,13 @@ open class Speech: NSObject {
   /// - Parameter text: text to be readed by voice
   public func speak(text: String) {
     
+    do {
+       try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: AVAudioSession.CategoryOptions.mixWithOthers)
+       try AVAudioSession.sharedInstance().setActive(true)
+    } catch {
+        print(error)
+    }
+    
     // force delegate
     synth.delegate = self
     
