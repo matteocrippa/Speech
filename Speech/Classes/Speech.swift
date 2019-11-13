@@ -45,7 +45,11 @@ open class Speech: NSObject {
   public func speak(text: String) {
     
     do {
-       try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: AVAudioSession.CategoryOptions.mixWithOthers)
+        if #available(iOS 10.0, *) {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: AVAudioSession.CategoryOptions.mixWithOthers)
+        } else {
+            // Fallback on earlier versions
+        }
        try AVAudioSession.sharedInstance().setActive(true)
     } catch {
         print(error)
