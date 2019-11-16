@@ -18,21 +18,21 @@ public enum DebugVerbosity {
 }
 
 /// Speech configuration struct
-open class SpeechConfiguration {
+public class SpeechConfiguration {
   var rate: Float = 0.3
   var pitch: Float = 0.1
   var volume: Float = 0.1
   var debug: DebugVerbosity = .none
 }
 
-open class Speech: NSObject {
+public class Speech: NSObject {
   
   /// Shared instance
   public static var shared = Speech()
   private override init() {}
   
   /// Configuration
-  var configuration: SpeechConfiguration = SpeechConfiguration()
+  public var configuration: SpeechConfiguration = SpeechConfiguration()
   
   /// Speech handler
   fileprivate let synth = AVSpeechSynthesizer()
