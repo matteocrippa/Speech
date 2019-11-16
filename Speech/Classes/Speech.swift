@@ -19,10 +19,11 @@ public enum DebugVerbosity {
 
 /// Speech configuration struct
 public class SpeechConfiguration {
-  var rate: Float = 0.3
-  var pitch: Float = 0.1
-  var volume: Float = 0.1
-  var debug: DebugVerbosity = .none
+  public var rate = 0.3
+  public var pitch = 0.1
+  public var volume = 0.1
+  public var allowMultiple = true
+  public var debug: DebugVerbosity = .none
 }
 
 public class Speech: NSObject {
@@ -59,7 +60,7 @@ public class Speech: NSObject {
     synth.delegate = self
     
     // if it's still speaking do nothing
-    if isSpeaking == true {
+    if isSpeaking && !allowMultiple {
       debug(error: "is already speaking")
       return
     }
@@ -76,7 +77,6 @@ public class Speech: NSObject {
     synth.speak(utterance)
     
     isSpeaking = true
-
   }
 }
 
