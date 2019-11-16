@@ -60,7 +60,7 @@ public class Speech: NSObject {
     synth.delegate = self
     
     // if it's still speaking do nothing
-    if isSpeaking && !allowMultiple {
+    if isSpeaking && !configuration.allowMultiple {
       debug(error: "is already speaking")
       return
     }
@@ -68,9 +68,9 @@ public class Speech: NSObject {
     let utterance = AVSpeechUtterance(string: text)
     
     // set configuration
-    utterance.rate = configuration.rate
-    utterance.pitchMultiplier = configuration.pitch
-    utterance.volume = configuration.volume
+    utterance.rate = Float(configuration.rate)
+    utterance.pitchMultiplier = Float(configuration.pitch)
+    utterance.volume = Float(configuration.volume)
     
     debug(data: text)
     
