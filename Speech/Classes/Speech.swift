@@ -30,7 +30,18 @@ public class Speech: NSObject {
   
   /// Shared instance
   public static var shared = Speech()
-  private override init() {}
+  private override init() {
+      do {
+          if #available(iOS 10.0, *) {
+              try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: AVAudioSession.CategoryOptions.mixWithOthers)
+          } else {
+              try AVAudioSession.sharedInstance().setCategory(.playback, options: AVAudioSession.CategoryOptions.mixWithOthers)
+          }
+         try AVAudioSession.sharedInstance().setActive(true)
+      } catch {
+          print(error)
+      }
+  }  
   
   /// Configuration
   public var configuration: SpeechConfiguration = SpeechConfiguration()
