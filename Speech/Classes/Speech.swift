@@ -35,6 +35,7 @@ public class Speech: NSObject {
     /// Shared instance
     public static var shared = Speech()
     private override init() {
+        super.init()
         do {
             if #available(iOS 10.0, *) {
                 try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: AVAudioSession.CategoryOptions.mixWithOthers)
@@ -45,13 +46,16 @@ public class Speech: NSObject {
         } catch {
             print(error)
         }
+        
+        // force delegate
+        synth.delegate = self
     }
     
     /// Configuration
     public var configuration: SpeechConfiguration = SpeechConfiguration()
     public weak var delegate: SpeechDelegate?
     public var isSpeaking = false
-   
+
     /// Speech handler
     fileprivate let synth = AVSpeechSynthesizer()
     
@@ -60,20 +64,6 @@ public class Speech: NSObject {
     ///
     /// - Parameter text: text to be readed by voice
     public func speak(text: String) -> AVSpeechUtterance? {
-        
-        do {
-            if #available(iOS 10.0, *) {
-                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: AVAudioSession.CategoryOptions.mixWithOthers)
-            } else {
-                // Fallback on earlier versions
-            }
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print(error)
-        }
-        
-        // force delegate
-        synth.delegate = self
         
         let utterance = AVSpeechUtterance(string: text)
         
@@ -86,6 +76,16 @@ public class Speech: NSObject {
         
         synth.speak(utterance)
         
+        return utterance
+    }
+    
+    public func silence(seconds: Double) -> AVSpeechUtterance? {
+        let utterance = AVSpeechUtterance()
+        
+        utterance.preUtteranceDelay = seconds
+        
+        debug(data: "silence of \(seconds) sec")
+
         return utterance
     }
 }
