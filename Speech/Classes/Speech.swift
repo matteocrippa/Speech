@@ -50,10 +50,10 @@ public class Speech: NSObject {
     /// Configuration
     public var configuration: SpeechConfiguration = SpeechConfiguration()
     public weak var delegate: SpeechDelegate?
-    
+    public var isSpeaking = false
+   
     /// Speech handler
     fileprivate let synth = AVSpeechSynthesizer()
-    fileprivate var isSpeaking = false
     
     
     /// Speak function
