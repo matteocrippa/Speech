@@ -1,28 +1,11 @@
-//
-//  File.swift
-//  Pods
-//
-//  Created by Matteo Crippa on 30/05/2017.
-//
-//
-
 import AVFoundation
 import Foundation
-
-/// Debug Verbosity
-public enum DebugVerbosity {
-    case none
-    case all
-    case error
-    case message
-}
 
 /// Speech configuration struct
 public class SpeechConfiguration {
     public var rate = 0.3
     public var pitch = 0.1
-    //public var volume = 0.1
-    public var debug: DebugVerbosity = .none
+    public var volume = 0.1
 }
 
 public protocol SpeechDelegate: class {
@@ -59,7 +42,6 @@ public class Speech: NSObject {
     /// Speech handler
     fileprivate let synth = AVSpeechSynthesizer()
     
-    
     /// Speak function
     ///
     /// - Parameter text: text to be readed by voice
@@ -68,11 +50,25 @@ public class Speech: NSObject {
         let utterance = AVSpeechUtterance(string: text)
         
         // set configuration
-        utterance.rate = Float(configuration.rate)
-        utterance.pitchMultiplier = Float(configuration.pitch)
-        utterance.volume = Float(configuration.volume)
+        //utterance.rate = Float(configuration.rate)
+        //utterance.pitchMultiplier = Float(configuration.pitch)
+        //utterance.volume = Float(configuration.volume)
+        var voice: AVSpeechSynthesisVoice!
+
+        for availableVoice in AVSpeechSynthesisVoice.speechVoices(){
+                if ((availableVoice.language == AVSpeechSynthesisVoice.currentLanguageCode()) &&
+                    (availableVoice.quality == AVSpeechSynthesisVoiceQuality.enhanced)){ // If you have found the enhanced version of the currently selected language voice amongst your available voices... Usually there's only one selected.
+                    voice = availableVoice
+                    print("\(availableVoice.name) selected as voice for uttering speeches. Quality: \(availableVoice.quality.rawValue)")
+                }
+        }
+        if let selectedVoice = voice { // if sucessfully unwrapped, the previous routine was able to identify one of the enhanced voices
+                print("The following voice identifier has been loaded: ",selectedVoice.identifier)
+        } else {
+                utterance.voice = AVSpeechSynthesisVoice(language: AVSpeechSynthesisVoice.currentLanguageCode()) // load any of the voices that matches the current language selection for the device in case no enhanced voice has been found.
+        }
         
-        debug(data: text)
+        Debug.log(source: .map, text)
         
         synth.speak(utterance)
         
@@ -84,7 +80,7 @@ public class Speech: NSObject {
         
         utterance.preUtteranceDelay = seconds
         
-        debug(data: "silence of \(seconds) sec")
+        Debug.log(source: .map, "silence of \(seconds) sec")
 
         return utterance
     }
@@ -100,35 +96,5 @@ extension Speech: AVSpeechSynthesizerDelegate {
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
         isSpeaking = true
         delegate?.start(utterance)
-    }
-}
-
-// MARK: - Logs
-extension Speech {
-    /// Error debug log wrapper for speech
-    ///
-    /// - Parameter error: string error
-    fileprivate func debug(error: String) {
-        if configuration.debug == .all || configuration.debug == .error {
-            print("🗣❌ Speech Error ❌ > " + error)
-        }
-    }
-    
-    /// Action debug log wrapper for speech
-    ///
-    /// - Parameter data: string
-    fileprivate func debug(data: String) {
-        if configuration.debug == .all || configuration.debug == .message {
-            print("🗣👉 Speech > " + data)
-        }
-    }
-    
-    /// Action settings log wrapper for db
-    ///
-    /// - Parameter data: string
-    fileprivate func settings(data: String) {
-        if configuration.debug == .all || configuration.debug == .message || configuration.debug == .error {
-            print("🗣🎚 Speech > " + data)
-        }
     }
 }
