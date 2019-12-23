@@ -21,7 +21,7 @@ public enum DebugVerbosity {
 public class SpeechConfiguration {
     public var rate = 0.3
     public var pitch = 0.1
-    public var volume = 0.1
+    //public var volume = 0.1
     public var debug: DebugVerbosity = .none
 }
 
